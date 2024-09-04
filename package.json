@@ -1,30 +1,50 @@
 {
-  "name": "learn-github-actions",
-  "version": "0.1.0",
+  "name": "docspace",
+  "version": "2.6.1",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test:e2e": "npx playwright test"
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
-  "dependencies": {
-    "next": "14.2.5",
-    "react": "^18",
-    "react-dom": "^18"
+  "engines": {
+    "node": ">=20",
+    "yarn": ">=4"
+  },
+  "scripts": {
+    "build": "node ./common/scripts/before-build.js && yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run build",
+    "bump": "yarn version apply --all",
+    "clean": "yarn workspaces foreach -vptiR run clean",
+    "deploy": "shx rm -rf ../publish/web && yarn workspaces foreach -ptR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run deploy && shx cp -r public ../publish/web/ && node common/scripts/minify-common-locales.js",
+    "start": "node ./common/scripts/before-build.js && yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run start",
+    "start-prod": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run start-prod",
+    "start:internal": "node ./common/scripts/before-build.js && yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run start:internal",
+    "start-prod:internal": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/doceditor,@docspace/management}' run start-prod:internal",
+    "storybook": "yarn workspace @docspace/shared storybook",
+    "storybook-build": "yarn workspace @docspace/shared run storybook-build",
+    "storybook-serve": "yarn workspace @docspace/shared run storybook-serve",
+    "test": "yarn workspace @docspace/shared test",
+    "wipe": "shx rm -rf node_modules yarn.lock packages/**/node_modules",
+    "licenses-audit": "yarn licenses audit --output-csv=licenses.csv --config=licenses.config.js --summary",
+    "check-circular": "yarn madge --circular ./packages",
+    "check-circular:graph": "yarn madge --circular --image graph.svg ./packages",
+    "lint": "yarn workspace @docspace/shared lint",
+    "lint:fix": "yarn workspace @docspace/shared lint:fix"
+  },
+  "old-scripts": {
+    "build:test": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/editor}' run build:test",
+    "build:test.translation": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login,@docspace/editor}' run build:test.translation",
+    "e2e.test": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login}' run test:sequential",
+    "e2e.test:sequential": "yarn workspace @docspace/client test:sequential && yarn workspace @docspace/login test:sequential",
+    "e2e.test:model": "yarn workspace @docspace/client test:model && yarn workspace @docspace/login test:model",
+    "e2e.test:translation": "yarn workspaces foreach -vptiR --from '{@docspace/client,@docspace/login}' run test:translation:model"
   },
   "devDependencies": {
-    "@playwright/test": "^1.46.1",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.5",
-    "msw": "^2.3.5",
-    "playwright-msw": "^3.0.1",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+    "@types/react-text-mask": "^5.4.14",
+    "he": "^1.2.0",
+    "madge": "^6.1.0",
+    "shx": "^0.3.4",
+    "terser": "^5.16.6"
+  },
+  "packageManager": "yarn@4.3.0"
 }
