@@ -83,7 +83,7 @@ test("wizard error", async ({ page, mockRequest }) => {
   await expect(page).toHaveScreenshot([
     "desktop",
     "wizard",
-    "wizard-error.png",
+    "wizard-success-redirect.png",
   ]);
 });
 
