@@ -32,7 +32,14 @@ const path = require("path");
 const fs = require("fs");
 const { readdir } = require("fs").promises;
 // @ts-expect-error path is correct
-const appSettings = require("../../../../1.work/DocSpace/buildtools/config/appsettings.json");
+
+let appSettings = null;
+
+try {
+  appSettings = require("../../../1.work/DocSpace/buildtools/config/appsettings.json");
+} catch (e) {
+  console.log(e);
+}
 
 const beforeBuild = async (
   pathsToLocales,
@@ -40,6 +47,18 @@ const beforeBuild = async (
   additionalPath,
   isSSR = false,
 ) => {
+  async function getCultures() {
+    const fileInDir = await readdir(pathsToLocales[0], {
+      withFileTypes: true,
+    });
+
+    const cultures = fileInDir
+      .filter((dirent) => dirent.isDirectory())
+      .map((d) => d.name);
+
+    return cultures;
+  }
+
   async function* getFiles(dir) {
     const dirents = await readdir(dir, { withFileTypes: true });
     for (const dirent of dirents) {
@@ -74,7 +93,7 @@ const beforeBuild = async (
 
   const localesFiles = await getLocalesFiles();
 
-  const cultures = appSettings.web.cultures;
+  const cultures = appSettings ? appSettings.web.cultures : await getCultures();
 
   const collectionByLng = new Map();
   const truthLng = new Map();
