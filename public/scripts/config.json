@@ -1,0 +1,34 @@
+{
+  "api": {
+    "origin": "",
+    "prefix": "/api/2.0",
+    "timeout": 30000
+  },
+  "proxy": {
+    "url": ""
+  },
+  "wrongPortalNameUrl": "",
+  "thumbnails1280x720": true,
+  "pdfViewer": false,
+  "pdfViewerUrl": "sdkjs/pdf/src/engine/viewer.js",
+  "imageThumbnails": true,
+  "editor": {
+    "requestClose": false
+  },
+  "management": {
+    "checkDomain": false
+  },
+  "oauth2": {
+    "origin": ""
+  },
+  "firebase": {
+    "fetchTimeoutMillis": 3600000,
+    "minimumFetchIntervalMillis": 3600000
+  },
+  "campaigns": [
+    "OnlyofficeForDevelopers",
+    "OnlyofficeForPlatform",
+    "BookTraining",
+    "FormGallery"
+  ]
+}
