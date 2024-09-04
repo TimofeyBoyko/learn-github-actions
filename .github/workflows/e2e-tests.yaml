@@ -1,4 +1,4 @@
-name: Login e2e tests
+name: E2e tests
 
 on:
   push:
@@ -21,14 +21,10 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn install
-      - name: Enter login client
-        run: cd packages/login
       - name: Build test version
         run: yarn test:build
       - name: Run tests
         run: yarn test:e2e
-      - name: Get path
-        run: pwd
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
