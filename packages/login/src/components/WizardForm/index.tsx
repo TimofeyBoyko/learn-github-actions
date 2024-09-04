@@ -56,7 +56,7 @@ import {
   ComboBoxSize,
   TOption,
 } from "@docspace/shared/components/combobox";
-import BetaBadge from "@docspace/client/src/components/BetaBadgeWrapper";
+// import BetaBadge from "@docspace/client/src/components/BetaBadgeWrapper";
 import { Checkbox } from "@docspace/shared/components/checkbox";
 import { Button, ButtonSize } from "@docspace/shared/components/button";
 import api from "@docspace/shared/api";
@@ -451,9 +451,6 @@ function WizardForm(props: WizardFormProps) {
             fillIcon={false}
             modernView={true}
           />
-          {selectedLanguage?.isBeta && (
-            <BetaBadge withOutFeedbackLink place="bottom" />
-          )}
         </div>
       </StyledInfo>
 
