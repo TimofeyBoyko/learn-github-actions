@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    "**/packages": true,
+    // "**/packages": true,
     "**/.nuget": true,
     "**/common": true,
     "**/Data": true,
