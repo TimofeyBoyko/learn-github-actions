@@ -52,7 +52,7 @@ const useDeviceType = () => {
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, [onResize]);
+  }, []);
 
   return { currentDeviceType };
 };

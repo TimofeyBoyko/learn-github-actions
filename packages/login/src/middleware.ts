@@ -32,6 +32,7 @@ import { OAuth2ErrorKey } from "./utils/enums";
 export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
 
+  console.log("1");
   const host = request.headers.get("x-forwarded-host");
   const proto = request.headers.get("x-forwarded-proto");
 
